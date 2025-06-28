@@ -6,7 +6,7 @@ on:
       - main
   pull_request:
     branches:
-      - main
+      - '**'
 
 jobs:
   build-and-test:
@@ -28,6 +28,12 @@ jobs:
     - name: Display Python Analyzer logs on failure
       if: failure()
       run: docker compose logs python_analyzer
+      
+    - name: Format code with Black
+      run: docker compose run --rm server bash -c "black app"
 
-    - name: Run linters
-      run: docker compose run --rm server bash -c "flake8 app && black --check app"
+    - name: Check code style with flake8
+      run: docker compose run --rm server bash -c "flake8 app"
+
+    - name: Verify Black formatting
+      run: docker compose run --rm server bash -c "black --check app"

@@ -16,31 +16,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Install Docker Compose
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y docker compose
-
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
     - name: Bring up services
-      run: |
-        cd mcp_server
-        docker compose up -d
+      run: docker compose up -d
 
     - name: Run tests
-      run: |
-        cd mcp_server
-        docker compose run --rm tester
+      run: docker compose run --rm tester
 
     - name: Display Python Analyzer logs on failure
       if: failure()
-      run: |
-        cd mcp_server
-        docker compose logs python_analyzer
+      run: docker compose logs python_analyzer
 
     - name: Run linters
-      run: |
-        cd mcp_server
-        docker compose run --rm server bash -c "flake8 app && black --check app"
+      run: docker compose run --rm server bash -c "flake8 app && black --check app"

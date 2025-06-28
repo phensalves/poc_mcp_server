@@ -26,18 +26,18 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Bring up services
-      run: docker-compose up -d
+      run: docker compose up -d
       working-directory: mcp_server
 
     - name: Run tests
-      run: docker-compose run --rm tester
+      run: docker compose run --rm tester
       working-directory: mcp_server
 
     - name: Display Python Analyzer logs on failure
       if: failure()
-      run: docker-compose logs python_analyzer
+      run: docker compose logs python_analyzer
       working-directory: mcp_server
 
     - name: Run linters
-      run: docker-compose run --rm server bash -c "flake8 app && black --check app"
+      run: docker compose run --rm server bash -c "flake8 app && black --check app"
       working-directory: mcp_server

@@ -231,8 +231,45 @@ This project includes a comprehensive test suite to ensure the correctness and r
 All tests can be run using Docker Compose:
 
 ```bash
-docker-compose run --rm tester
+docker compose run --rm tester
 ```
+
+### Running Linters Locally
+
+It is highly recommended to run linters locally before pushing your code to ensure compliance with code style and quality standards. This helps catch issues early and speeds up CI/CD feedback.
+
+1.  **Ensure Services are Running**:
+    First, make sure your Docker services are up. If they are already running, this command will do nothing.
+    ```bash
+    docker compose up -d
+    ```
+
+2.  **Run `black` (Reformat Code)**:
+    This command will automatically reformat your Python code according to `black`'s standards. It's recommended to run this first.
+    ```bash
+    docker compose run --rm server bash -c "black app"
+    ```
+
+3.  **Run `flake8` (Check for Style & Errors)**:
+    This command will check your code for style guide violations and potential programming errors.
+    ```bash
+    docker compose run --rm server bash -c "flake8 app"
+    ```
+
+4.  **Verify `black` Formatting (Optional but Recommended)**:
+    After running `black app`, you can run `black --check` to confirm that no further reformatting is needed.
+    ```bash
+    docker compose run --rm server bash -c "black --check app"
+    ```
+
+**Local Linting Workflow:**
+
+1.  Make your code changes.
+2.  Run `docker compose run --rm server bash -c "black app"` to auto-format.
+3.  Run `docker compose run --rm server bash -c "flake8 app"` to check for other issues.
+4.  Fix any issues reported by `flake8`.
+5.  Repeat steps 2-4 until both commands run successfully (or `black --check` reports no changes).
+6.  Commit your changes and push to the repository.
 
 ### Test Types
 

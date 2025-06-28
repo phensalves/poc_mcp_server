@@ -131,4 +131,8 @@ app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/")
 async def read_index():
+<<<<<<< HEAD
     return FileResponse("frontend/index.html")
+=======
+    return FileResponse("frontend/index.html")
+>>>>>>> a21f4a7 (fix(lint): Resolve E501 flake8 warnings in app/main.py)

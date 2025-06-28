@@ -1,0 +1,44 @@
+
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app/app
+      - ./frontend:/app/frontend
+      - ./tests:/app/tests
+    depends_on:
+      - rabbitmq
+
+  tester:
+    build:
+      context: .
+      
+    volumes:
+      - ./app:/app/app
+      - ./frontend:/app/frontend
+      - ./tests:/app/tests
+    command: ["tail", "-f", "/dev/null"]
+    depends_on:
+      - rabbitmq
+
+  python_analyzer:
+    build:
+      context: ./python_analyzer_service
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./python_analyzer_service/app:/app/app
+    depends_on:
+      - rabbitmq
+
+  rabbitmq:
+    image: "rabbitmq:3-management-alpine"
+    ports:
+      - "5672:5672"
+      - "15672:15672" # Management UI

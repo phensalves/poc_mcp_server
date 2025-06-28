@@ -21,12 +21,14 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Build Docker images
-      run: docker-compose build
-      working-directory: mcp_server
+      run: |
+        cd mcp_server
+        docker-compose build
 
     - name: Run tests
-      run: docker-compose run --rm tester
-      working-directory: mcp_server
+      run: |
+        cd mcp_server
+        docker-compose run --rm tester
 
     - name: Run linters
       run: |

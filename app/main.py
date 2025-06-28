@@ -30,14 +30,20 @@ def load_llm_providers():
     providers = {}
     provider_dir = os.path.join(os.path.dirname(__file__), "llm_providers")
     for filename in os.listdir(provider_dir):
-        if (filename.endswith(".py") and not filename.startswith("__")
-                and filename != "base.py"):
+        if (
+            filename.endswith(".py")
+            and not filename.startswith("__")
+            and filename != "base.py"
+        ):
             module_name = f"app.llm_providers.{filename[:-3]}"
             module = importlib.import_module(module_name)
             for item_name in dir(module):
                 item = getattr(module, item_name)
-                if (isinstance(item, type) and issubclass(item, LLMProvider)
-                        and item is not LLMProvider):
+                if (
+                    isinstance(item, type)
+                    and issubclass(item, LLMProvider)
+                    and item is not LLMProvider
+                ):
                     instance = item()
                     providers[instance.get_name()] = instance
     return providers
@@ -88,12 +94,12 @@ async def analyze_code(request: AnalysisRequest):
         except httpx.RequestError as exc:
             raise HTTPException(
                 status_code=500,
-                detail=f"Error communicating with Python Analyzer: {exc}"
+                detail=f"Error communicating with Python Analyzer: {exc}",
             )
         except httpx.HTTPStatusError as exc:
             raise HTTPException(
                 status_code=exc.response.status_code,
-                detail=f"Python Analyzer error: {exc.response.text}"
+                detail=f"Python Analyzer error: {exc.response.text}",
             )
     elif request.language in language_analyzers:
         analyzer_func = language_analyzers[request.language]
@@ -104,7 +110,7 @@ async def analyze_code(request: AnalysisRequest):
             detail=f"Language '{request.language}' not supported."
         )
 
-    analysis_result['refactoring_suggestion'] = refactoring_suggestion
+    analysis_result["refactoring_suggestion"] = refactoring_suggestion
 
     return {"language": request.language, "analysis": analysis_result}
 
@@ -125,4 +131,4 @@ app.mount("/static", StaticFiles(directory="frontend"), name="static")
 
 @app.get("/")
 async def read_index():
-    return FileResponse('frontend/index.html')
+    return FileResponse("frontend/index.html")

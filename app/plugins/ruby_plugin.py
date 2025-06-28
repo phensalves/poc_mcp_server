@@ -66,7 +66,7 @@ def _detect_issues(code: str, lines: List[str]) -> List[str]:
     if ".each do |" in code and "map" not in code:
         issues.append("♻️ Ruby Style: Consider using 'map' instead of 'each' when transforming collections")
     
-    if re.search(r'if\s+.*\.nil\?', code):
+    if re.search(r'if\s+.*\\.nil\\?', code):
         issues.append("♻️ Ruby Style: Consider using safe navigation operator (&.) instead of nil checks")
     
     # SOLID Principles violations (basic detection)

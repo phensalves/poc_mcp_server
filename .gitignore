@@ -1,0 +1,41 @@
+# Gitignore for MCP Server Project
+
+# Python
+*.pyc
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.env
+venv/
+*.log
+*.sqlite3
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Docker
+*.dockerignore
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Gemini specific
+GEMINI.md

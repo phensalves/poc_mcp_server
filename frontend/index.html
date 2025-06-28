@@ -1,0 +1,39 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCP Server</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>MCP Server</h1>
+        <p>Modular Code Analysis Platform</p>
+
+        <div class="form-container">
+            <div class="controls">
+                <div class="control-group">
+                    <label for="language-select">Language:</label>
+                    <select id="language-select"></select>
+                </div>
+                <div class="control-group">
+                    <label for="provider-select">AI Provider:</label>
+                    <select id="provider-select"></select>
+                </div>
+            </div>
+
+            <textarea id="code-input" placeholder="Enter your code here..."></textarea>
+            <button id="analyze-btn">Analyze</button>
+        </div>
+
+        <div id="results-container" class="hidden">
+            <h2>Analysis Results</h2>
+            <pre id="results-output"></pre>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

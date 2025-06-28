@@ -28,7 +28,7 @@ jobs:
     - name: Display Python Analyzer logs on failure
       if: failure()
       run: docker compose logs python_analyzer
-
+      
     - name: Format code with Black
       run: docker compose run --rm server bash -c "black app"
 

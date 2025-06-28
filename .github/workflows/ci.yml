@@ -29,6 +29,4 @@ jobs:
       run: docker compose logs python_analyzer
 
     - name: Run linters
-      run: |
-        cd mcp_server
-        docker compose run --rm server bash -c "flake8 app && black --check app"
+      run: docker compose run --rm server bash -c "flake8 app && black --check app"

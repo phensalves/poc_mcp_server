@@ -73,11 +73,13 @@ async def analyze_code(request: AnalysisRequest):
     if request.provider not in llm_providers:
         raise HTTPException(
             status_code=400,
-            detail=f"LLM Provider '{request.provider}' not supported.",
+            detail=f"LLM Provider '{request.provider}' not supported."
         )
 
     llm_provider = llm_providers[request.provider]
-    refactoring_suggestion = llm_provider.get_refactoring_suggestion(request.code)
+    refactoring_suggestion = llm_provider.get_refactoring_suggestion(
+        request.code
+    )
     analysis_result = {}
 
     if request.language == "python":
@@ -85,7 +87,7 @@ async def analyze_code(request: AnalysisRequest):
             async with httpx.AsyncClient() as client:
                 response = await client.post(
                     "http://python_analyzer:8001/analyze",
-                    json={"code": request.code},
+                    json={"code": request.code}
                 )
                 response.raise_for_status()
                 analysis_result = response.json()["analysis"]
@@ -105,7 +107,7 @@ async def analyze_code(request: AnalysisRequest):
     else:
         raise HTTPException(
             status_code=400,
-            detail=f"Language '{request.language}' not supported.",
+            detail=f"Language '{request.language}' not supported."
         )
 
     analysis_result["refactoring_suggestion"] = refactoring_suggestion

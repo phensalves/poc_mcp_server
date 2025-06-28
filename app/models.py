@@ -1,11 +1,12 @@
-
 from pydantic import BaseModel
 from typing import List, Dict, Any
+
 
 class Issue(BaseModel):
     code: str
     message: str
     line_number: int
+
 
 class AnalysisReport(BaseModel):
     metrics: Dict[str, Any]

@@ -20,19 +20,19 @@ jobs:
       uses: docker/setup-buildx-action@v3
 
     - name: Build Docker images
-      uses: docker/compose-action@v2
+      uses: docker/compose-action@v3
       with:
         compose-file: mcp_server/docker-compose.yml
         command: build
 
     - name: Run tests
-      uses: docker/compose-action@v2
+      uses: docker/compose-action@v3
       with:
         compose-file: mcp_server/docker-compose.yml
         command: run --rm tester
 
     - name: Run linters
-      uses: docker/compose-action@v2
+      uses: docker/compose-action@v3
       with:
         compose-file: mcp_server/docker-compose.yml
         command: run --rm server bash -c "flake8 app && black --check app"

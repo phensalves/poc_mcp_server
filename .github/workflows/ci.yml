@@ -1,0 +1,34 @@
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Build Docker images
+      run: docker-compose build
+      working-directory: mcp_server
+
+    - name: Run tests
+      run: docker-compose run --rm tester
+      working-directory: mcp_server
+
+    - name: Run linters
+      run: |
+        docker-compose run --rm server bash -c "flake8 app && black --check app"
+      working-directory: mcp_server
